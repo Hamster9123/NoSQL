@@ -1,0 +1,22 @@
+1)
+db.customers.find({$query: {Country:"China"}})
+  .sort ({ "District":-1, "First Name":1, "Last Name":1})
+  
+2)
+SELECT * 
+     FROM customers 
+     Where Country = 'China' 
+     ORDER BY "District" DESC , "First Name" , "Last Name"
+     
+3)
+db.customers.aggregate([{
+    $project: {
+        "Last Name":1,
+        "First Name":1,
+        countFilms:{$size:"$Rentals"}
+    }
+}])
+
+4)
+db.customers.find({"Rentals.filmId": {$in: db.films.find({"Category":"Classics"})
+  .map(function(f){return f._id})}}) 
