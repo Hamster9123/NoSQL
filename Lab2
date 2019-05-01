@@ -1,0 +1,7 @@
+1)
+db.films.aggregate(
+    { $group : {
+        _id : "$Category",
+        Category : { $sum : 1 }
+    }}
+);
