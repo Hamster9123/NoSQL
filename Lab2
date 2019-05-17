@@ -1,7 +1,19 @@
-1)
-db.films.aggregate(
-    { $group : {
-        _id : "$Category",
-        Category : { $sum : 1 }
-    }}
-);
+1.
+mb.runSQLQuery(`
+select films.'Category',count(*) from films group by films.'Category'
+`)
+
+
+2.
+mb.runSQLQuery(`
+select count(*) from films group by films.'Category',films.Rating
+`)
+
+
+3.
+db.customers.aggregate([
+    {"$unwind":"$Rentals"},
+    {"$unwind":"$Rentals.Payments"},
+    {"$group":{_id:"$_id","Amount":{$sum:"$Rentals.Payments.Amount"}}
+]
+)
